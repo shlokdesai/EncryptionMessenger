@@ -7,13 +7,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +40,8 @@ public class MainPageActivity extends AppCompatActivity {
     private Button chatCreate;
     private RecyclerView rv;
     private RecyclerViewAdapter adapter;
+    private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +107,8 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void CreateChat() {
-        String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();// push method creates a key
+        final String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();// push method creates a key
+        int usersChosen = 0;
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
         for(UserObject object: userObjects){
             if(object.getSelected()){
@@ -118,6 +126,59 @@ public class MainPageActivity extends AppCompatActivity {
             }
         }
         FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid()).setValue(true);
-        startActivity(new Intent(MainPageActivity.this, ChatListActivity.class) ) ;
+        for(UserObject object: userObjects){
+            if(object.getSelected()){
+                usersChosen += 1;
+            }
+        }
+        if(usersChosen == 1){
+            //will not make user enter the name
+            startActivity(new Intent(MainPageActivity.this, ChatListActivity.class) ) ;
+        }
+        else if(usersChosen > 1){
+            //will show pop up for the user to enter the name
+            Context context = this;
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popup = inflater.inflate(R.layout.pop_up_for_grpname, null);
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int hieght = LinearLayout.LayoutParams.WRAP_CONTENT;
+            boolean focusable = true;
+            final PopupWindow popupWindow = new PopupWindow(popup, width, hieght, focusable);
+
+            popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0);
+            Button enterGrpName = popup.findViewById(R.id.enterName);
+            final EditText grpName = popup.findViewById(R.id.GrpName);
+            enterGrpName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
+                    databaseReference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String groupName = grpName.getText().toString();
+                            Map<String, Object> addGrpName = new HashMap<>();
+                            addGrpName.put("Group Name", groupName);
+                            databaseReference1.updateChildren(addGrpName);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    startActivity(new Intent(MainPageActivity.this, ChatListActivity.class));
+                }
+            });
+
+            popup.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    popupWindow.dismiss();
+                    return true;
+                }
+            });
+
+        }
+
     }
 }
