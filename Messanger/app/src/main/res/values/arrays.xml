@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="encryption_choices">
+        <item
+            ></item>
+        <item
+            >Simple Encryption</item>
+        <item
+            >Shifted Encryption</item>
+        <item
+            >Ceaser Cipher</item>
+    </string-array>
+</resources>

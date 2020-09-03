@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "297864434461",
+    "firebase_url": "https://quickstart-1587254532288.firebaseio.com",
+    "project_id": "quickstart-1587254532288",
+    "storage_bucket": "quickstart-1587254532288.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297864434461:android:f1bc10cbc0b68e50d4c7f4",
+        "android_client_info": {
+          "package_name": "com.example.computerscienceculminating"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297864434461-vookh1ssnubsrc7d6h170kvgat0cekm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMVOJbVx1czZHvTaAVGRgUqVhi7ss0CxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297864434461-vookh1ssnubsrc7d6h170kvgat0cekm2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297864434461:android:0303811d2bddfc0ad4c7f4",
+        "android_client_info": {
+          "package_name": "com.example.messanger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297864434461-sp0hu98lrunfu1fn1om66hmhh8oq3ofb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.messanger",
+            "certificate_hash": "6055df1dffb594732e689a2a82687985f86fdeac"
+          }
+        },
+        {
+          "client_id": "297864434461-vookh1ssnubsrc7d6h170kvgat0cekm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMVOJbVx1czZHvTaAVGRgUqVhi7ss0CxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297864434461-vookh1ssnubsrc7d6h170kvgat0cekm2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297864434461:android:3af7c38a5747d137d4c7f4",
+        "android_client_info": {
+          "package_name": "com.example.messangingapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297864434461-vookh1ssnubsrc7d6h170kvgat0cekm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMVOJbVx1czZHvTaAVGRgUqVhi7ss0CxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297864434461-vookh1ssnubsrc7d6h170kvgat0cekm2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

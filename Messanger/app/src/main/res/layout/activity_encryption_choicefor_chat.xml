@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EncryptionChoiceforChatActivity">
+    <TextView
+        android:id="@+id/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="60dp"
+        android:text="Choose your Encryption type" />
+
+    <Button
+        android:id="@+id/shifted"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="80dp"
+        android:text="Shifted Encryption" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:text="Simple Encryption"
+        android:id="@+id/simple"
+        android:layout_marginTop="120dp"/>
+    <Button
+        android:id="@+id/ceaser"
+        android:layout_width="250dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:text="Ceaser Encryption"
+        android:layout_marginTop="160dp"/>
+    <Button
+        android:id="@+id/none"
+        android:layout_width="250dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:text="none"
+        android:layout_marginTop="200dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp">
+
+        <EditText
+            android:id="@+id/shift_value"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/Text2"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="-15dp"
+            android:digits="1234567890"
+            android:hint="" />
+
+        <Button
+            android:id="@+id/enter_shiftValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:text="Go" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="340dp"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter the keyword"
+            android:id="@+id/Text3"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Keyword"
+            android:id="@+id/key"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go"
+            android:id="@+id/enterKey"
+            android:layout_marginTop="-5dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/Text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="305dp"
+        android:text="Enter your shift value" />
+</RelativeLayout>
