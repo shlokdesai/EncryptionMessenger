@@ -1,7 +1,5 @@
 package com.example.messanger;
 
-import java.util.ArrayList;
-
 public class UserObject {
 
     private String email;
@@ -10,11 +8,11 @@ public class UserObject {
     private boolean isSelected;
     private String Name;
 
-    public UserObject(String email, String key/*, String name*/){
+    public UserObject(String email, String key,String name){
         this.email = email;
         this.Uid = key;
         this.timesClicked = 0;
-        //this.Name = name;
+        this.Name = name;
     }
 
     public String getEmail() {

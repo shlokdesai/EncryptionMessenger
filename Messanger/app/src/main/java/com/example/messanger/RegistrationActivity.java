@@ -53,29 +53,17 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = Email.getText().toString();
                 String password = Password.getText().toString();
                 String name = Name.getText().toString();
-
-                if(email.isEmpty() && password.isEmpty() && name.isEmpty() ){
+                if(email.isEmpty()){
                     Email.setError("Please fill in the required field");
+                }
+                if(password.isEmpty()){
                     Password.setError("Please fill in the required field");
+                }
+                if(name.isEmpty()){
                     Name.setError("Please fill in the required field");
                 }
-
-                else if(email.isEmpty() && !(password.isEmpty()) /*&& !name.isEmpty()*/){
-                    Email.setError("Please fill in the required field");
-                }
-
-                else if(!(email.isEmpty()) && password.isEmpty() /*&& !name.isEmpty()*/) {
-                    Password.setError("Please fill in the required field");
-                }
-               /* else if(!(email.isEmpty() && password.isEmpty()) && name.isEmpty()){
-                    Name.setError("Please fill in the required field");
-                }*/
-                /*else if(password.isEmpty() && email.isEmpty() && !(name.isEmpty())){
-                    Password.setError("Please fill in the required field");
-                    Email.setError("Please fill in the required field");
-                }*/
-                else /*(/*!(password.isEmpty()) /*&& !(name.isEmpty()) && !(email.isEmpty()))*/{
-                    createAccount(email, password/*, name*/);
+                else if(!email.isEmpty() && (!name.isEmpty()) && !password.isEmpty()){
+                    createAccount(email, password, name);
                 }
             }
         });
@@ -88,7 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    private void createAccount(final String email, final String password/*, final String name*/) {
+    private void createAccount(final String email, final String password, final String name) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -113,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
                         });
                     }
-                    LoginSuccessful(/*name*/);
+                    LoginSuccessful(name);
                 }
                 else{
                     Toast.makeText(RegistrationActivity.this, " Authentication Failed", Toast.LENGTH_LONG).show();
@@ -123,17 +111,16 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    private void LoginSuccessful(/*final String name*/){
+    private void LoginSuccessful(final String name){
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser != null){
             Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_LONG).show();
-            /*final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid());
+            final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid());
             databaseReference1.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //String Name = name;
                     Map<String, Object> addName = new HashMap<>();
-                    addName.put("Name", Name);
+                    addName.put("Name", name);
                     databaseReference1.updateChildren(addName);
                 }
 
@@ -141,7 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
-            });*/
+            });
 
             startActivity(new Intent(RegistrationActivity.this, FindContacts.class));
         }

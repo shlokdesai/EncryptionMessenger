@@ -72,14 +72,18 @@ public class MainPageActivity extends AppCompatActivity {
                 if(snapshot.exists()){
                     for(DataSnapshot snapshot1: snapshot.getChildren()){
                         if(!(firebaseUser.getUid().equals(snapshot1.getKey()))){
-                            String email = snapshot1.child("email").getValue().toString();
+                            String name = "none";
+                            String email = "none";
+                            if(snapshot1.child("email").exists())
+                                email = snapshot1.child("email").getValue().toString();
                             String key = snapshot1.getKey();
-                            UserObject userObject = new UserObject(email, key/*, snapshot1.child("Name").getValue().toString()*/);
+                            if(snapshot1.child("Name").exists())
+                                name = snapshot1.child("Name").getValue().toString();
+                            UserObject userObject = new UserObject(email, key, name);
                             userObjects.add(userObject);
                             adapter  = new RecyclerViewAdapter(userObjects);
                         }
                     }
-                    //rv.setHasFixedSize(true);
                     rv.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -96,14 +100,12 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void CreateChat() {
-        int numberSelected = 0;
         String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();// push method creates a key
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
         for(UserObject object: userObjects){
             if(object.getSelected()){
                 FirebaseDatabase.getInstance().getReference().child("user").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("chat").child(key).setValue(true);
                 FirebaseDatabase.getInstance().getReference().child("user").child(object.getUid()).child("chat").child(key).setValue(true);
-                numberSelected++;
             }
         }
         FirebaseDatabase.getInstance().getReference().child("chat").child(key).setValue(true);

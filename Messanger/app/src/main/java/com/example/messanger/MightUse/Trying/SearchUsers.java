@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -25,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchUsers extends AppCompatActivity {
     private ListView listView;
@@ -52,7 +49,7 @@ public class SearchUsers extends AppCompatActivity {
                 for(DataSnapshot snapshot1: snapshot.getChildren()) {
                     if (!snapshot.getKey().equals(firebaseUser.getUid())){
                         list.add(snapshot1.getValue().toString());
-                        UserObject userObject = new UserObject(snapshot1.child("email").getValue().toString(), snapshot1.getKey()/*, snapshot1.child("Name").toString()*/);
+                        UserObject userObject = new UserObject(snapshot1.child("email").getValue().toString(), snapshot1.getKey(),snapshot1.child("Name").getValue().toString());
                         userList.add(userObject);
                     }
                 }
