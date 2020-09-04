@@ -133,6 +133,45 @@ public class MainPageActivity extends AppCompatActivity {
         }
         if(usersChosen == 1){
             //will not make user enter the name
+            String userID = "";
+
+            for (UserObject object: userObjects){
+                if(object.getSelected()){
+                    if(!object.getUid().equals(FirebaseAuth.getInstance().getUid())){
+                        userID = object.getUid();
+                    }
+                }
+            }
+            DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
+            databaseReference1.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = "";
+                    if(snapshot.child("Name").exists()){
+                        name = snapshot.child("Name").getValue().toString();
+                    }
+                    final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
+                    final String finalName = name;
+                    databaseReference2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Map<String, Object> addName = new HashMap<>();
+                            addName.put("Group Name", finalName);
+                            databaseReference2.updateChildren(addName);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             startActivity(new Intent(MainPageActivity.this, ChatListActivity.class) ) ;
         }
         else if(usersChosen > 1){
