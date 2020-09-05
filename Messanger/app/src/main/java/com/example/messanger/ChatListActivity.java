@@ -28,7 +28,7 @@ public class ChatListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ChatListObject> chatList;
-    private Button grpChat;
+    private Button newChat;
     ChatListObject chatListObject;
 
     @Override
@@ -37,6 +37,13 @@ public class ChatListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         FirebaseApp.initializeApp(this);
         recyclerView = findViewById(R.id.ListofChats);
+        newChat = findViewById(R.id.newChat);
+        newChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChatListActivity.this, MainPageActivity.class));
+            }
+        });
         chatList = new ArrayList<>();
         recyclerView.setHasFixedSize(false);
         recyclerView.setNestedScrollingEnabled(false);
@@ -44,6 +51,7 @@ public class ChatListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ChatListAdapter(chatList);
         recyclerView.setAdapter(adapter);
+
         getUserChatList();
     }
 
@@ -154,4 +162,8 @@ public class ChatListActivity extends AppCompatActivity {
         return chatList;
     }
 
+    @Override
+    public void onBackPressed() {//so that we dont go back to the previous activity when back is clicked
+
+    }
 }
