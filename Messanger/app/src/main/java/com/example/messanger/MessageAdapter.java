@@ -16,12 +16,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.Key;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     Context context;
     List<MessageObject> messageObjectList;
-    String EncryptionChoice = "", key = "", sentmessage = "", Message = "";
+    String EncryptionChoice = "", key = "", sentmessage = "", Message = "", lastMessage = "";
     int ShiftValue;
     public MessageAdapter(List<MessageObject> messageObjectList) {// this is not getting called on pressing the send button
         this.messageObjectList = messageObjectList;
@@ -39,7 +41,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final MessageAdapter.ViewHolder holder, final int position) {
         holder.message.setText(messageObjectList.get(position).getMessage());
-        holder.sender.setText(messageObjectList.get(position).getSender());
+        String senderID = messageObjectList.get(position).getSender();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(senderID);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.sender.setText(snapshot.child("Name").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //holder.sender.setText(messageObjectList.get(position).getSender());
         sentmessage = messageObjectList.get(position).getMessage();
         final String ChatID = messageObjectList.get(position).getChatID();
         holder.message.setOnClickListener(new View.OnClickListener() {//problem with the listener, the method for deciphering is only called after the 3rd trial, for the same word
@@ -86,6 +101,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             }
         });
+
     }
 
     private String shiftedCipher(String Message) {
