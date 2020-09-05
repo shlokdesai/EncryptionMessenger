@@ -88,6 +88,26 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
             }
         });
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child("Last Message").exists()){
+                    String lastMessage = snapshot.child("Last Message").getValue().toString();
+                    holder.lastMesssage.setText(lastMessage);
+                }
+                else if(snapshot.child("Last Message").exists()){
+                    String lastMessage = "No Message";
+                    holder.lastMesssage.setText(lastMessage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override
@@ -100,12 +120,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
     }
 
     public class ChatListViewHolder extends RecyclerView.ViewHolder {
-        public TextView chat;
+        public TextView chat, lastMesssage;
         public LinearLayout layout;
         public ChatListViewHolder(View view){
             super(view);
             chat = view.findViewById(R.id.chat);
             layout = view.findViewById(R.id.Layout);
+            lastMesssage = view.findViewById(R.id.lastMessage);
         }
 
     }
