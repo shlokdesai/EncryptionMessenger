@@ -107,25 +107,9 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void CreateChat() {
-        final String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();// push method creates a key
         int usersChosen = 0;
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
-        for(UserObject object: userObjects){
-            if(object.getSelected()){
-                FirebaseDatabase.getInstance().getReference().child("user").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("chat").child(key).setValue(true);
-                FirebaseDatabase.getInstance().getReference().child("user").child(object.getUid()).child("chat").child(key).setValue(true);
-            }
-        }
-        FirebaseDatabase.getInstance().getReference().child("chat").child(key).setValue(true);
-        FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid());
+        final String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();// push method creates a key
 
-
-        for (UserObject object: userObjects){
-            if (object.getSelected()){
-                FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(object.getUid()).setValue(true);
-            }
-        }
-        FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid()).setValue(true);
         for(UserObject object: userObjects){
             if(object.getSelected()){
                 usersChosen += 1;
@@ -146,6 +130,23 @@ public class MainPageActivity extends AppCompatActivity {
             databaseReference1.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
+                    for(UserObject object: userObjects){
+                        if(object.getSelected()){
+                            FirebaseDatabase.getInstance().getReference().child("user").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("chat").child(key).setValue(true);
+                            FirebaseDatabase.getInstance().getReference().child("user").child(object.getUid()).child("chat").child(key).setValue(true);
+                        }
+                    }
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid());
+
+
+                    for (UserObject object: userObjects){
+                        if (object.getSelected()){
+                            FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(object.getUid()).setValue(true);
+                        }
+                    }
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid()).setValue(true);
                     String name = "";
                     if(snapshot.child("Name").exists()){
                         name = snapshot.child("Name").getValue().toString();
@@ -190,6 +191,24 @@ public class MainPageActivity extends AppCompatActivity {
             enterGrpName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
+                    for(UserObject object: userObjects){
+                        if(object.getSelected()){
+                            FirebaseDatabase.getInstance().getReference().child("user").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("chat").child(key).setValue(true);
+                            FirebaseDatabase.getInstance().getReference().child("user").child(object.getUid()).child("chat").child(key).setValue(true);
+                        }
+                    }
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid());
+
+
+                    for (UserObject object: userObjects){
+                        if (object.getSelected()){
+                            FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(object.getUid()).setValue(true);
+                        }
+                    }
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid()).setValue(true);
                     final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
                     databaseReference1.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -220,4 +239,5 @@ public class MainPageActivity extends AppCompatActivity {
         }
 
     }
+
 }
