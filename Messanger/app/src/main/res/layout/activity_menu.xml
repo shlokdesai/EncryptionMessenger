@@ -6,10 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ChatListActivity"
     android:orientation="vertical">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ListofChats"/>
+        android:padding="20dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ListofChats"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Chat"
+            android:id="@+id/newChat"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
 
 </LinearLayout>
