@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -158,6 +159,20 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
             else if(encryptionChoice.equals("none")){
                 theMessage = none();
             }
+            final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID);
+            databaseReference2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Map<String, Object> addLastMessage = new HashMap<>();
+                    addLastMessage.put("Last Message", theMessage);
+                    databaseReference2.updateChildren(addLastMessage);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             DatabaseReference newMessageDb = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID).child("Messages").push();
             Map newMessageMap = new HashMap<>();
             newMessageMap.put("text", theMessage);
@@ -364,7 +379,8 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
         return newphrase;
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MessageActivity.this, ChatListActivity.class));
+    }
 }
