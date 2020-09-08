@@ -16,7 +16,7 @@ public class UserObject {
     }
 
     public String getEmail() {
-        String sendEmail = email.substring(email.indexOf("email=")+6, email.length()-1);
+        String sendEmail = email;
         return sendEmail;
     }
     public void setSelected(boolean selected) {
