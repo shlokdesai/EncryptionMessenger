@@ -33,4 +33,12 @@
             android:id="@+id/Send"/>
     </LinearLayout>
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/toolbar"/>
+
 </RelativeLayout>
