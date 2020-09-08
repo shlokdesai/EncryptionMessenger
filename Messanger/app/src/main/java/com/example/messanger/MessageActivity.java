@@ -2,14 +2,20 @@ package com.example.messanger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +45,32 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_main);
+
+        //make toolbar and add a back button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(ChatListAdapter.ChatName);
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MessageActivity.this, ChatListActivity.class));
+            }
+        });
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popup = layoutInflater.inflate(R.layout.notification_status_popup, null);
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int hieght = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true;
+                final PopupWindow popupWindow = new PopupWindow(popup, width, hieght, focusable);
+                CheckBox status = popup.findViewById(R.id.status);
+                popupWindow.showAtLocation(popup, Gravity.CENTER, 0,0);
+            }
+        });
+
         chatListObjects = super.getChatList();
         chatIDs = new ArrayList<>();
         shiftValue = "0";
@@ -85,6 +117,7 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
         });
 
     }
+
 
     private void getChatMessages() {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID).child("Messages");
@@ -195,7 +228,6 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
 
                     }
                 });
-                Toast.makeText(MessageActivity.this, notificationKey, Toast.LENGTH_LONG).show();
                 new SendNotifications(theMessage, "New Message", notificationKey);
             }
         }
