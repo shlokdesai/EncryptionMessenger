@@ -28,7 +28,7 @@ public class ChatListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ChatListObject> chatList;
-    private Button newChat;
+    private Button newChat, logout;
     ChatListObject chatListObject;
 
     @Override
@@ -44,6 +44,19 @@ public class ChatListActivity extends AppCompatActivity {
                 startActivity(new Intent(ChatListActivity.this, MainPageActivity.class));
             }
         });
+        logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OneSignal.setSubscription(false);
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);// this is basically the start activity that i have used everywhere else in the app.
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);// start activity method is called.
+                finish();
+                return;
+            }
+        });
         chatList = new ArrayList<>();
         recyclerView.setHasFixedSize(false);
         recyclerView.setNestedScrollingEnabled(false);
@@ -53,6 +66,7 @@ public class ChatListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         getUserChatList();
+
     }
 
     private void getUserChatList(){
