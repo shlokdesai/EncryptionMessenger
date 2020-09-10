@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,39 +41,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final MessageAdapter.ViewHolder holder, final int position) {
         String senderID = messageObjectList.get(position).getSender();
-        if(senderID.equals(FirebaseAuth.getInstance().getUid())){
-            holder.message.setText(messageObjectList.get(position).getMessage());
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(senderID);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    holder.sender.setText(snapshot.child("Name").getValue().toString());
-                }
+        holder.message.setText(messageObjectList.get(position).getMessage());
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(senderID);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.sender.setText(snapshot.child("Name").getValue().toString());
+            }
 
-                }
-            });
-        }
-        else{
-            holder.Message.setText(messageObjectList.get(position).getMessage());
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(senderID);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    holder.sender.setText(snapshot.child("Name").getValue().toString());
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-
-
-
+            }
+        });
         //holder.sender.setText(messageObjectList.get(position).getSender());
         sentmessage = messageObjectList.get(position).getMessage();
         final String ChatID = messageObjectList.get(position).getChatID();
@@ -91,52 +71,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         if(EncryptionChoice.equals("Simple Encryption"))
                             key = snapshot.child("key").getValue().toString();
 
-                        else
-                            ShiftValue = Integer.parseInt(snapshot.child("shift").getValue().toString());
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-                if(EncryptionChoice.equals("Shifted Encryption")){
-                    String messageCipherd = shiftedCipher(Message);
-                    holder.message.setText(messageCipherd);
-                }
-
-                else if(EncryptionChoice.equals("Simple Encryption")){
-                    String messageCipherd = simpleCipher(Message);
-                    holder.message.setText(messageCipherd);
-
-                }
-
-                else if(EncryptionChoice.equals("Ceaser Encryption")){
-                    String messageCipherd = ceaserCipher(Message);
-                    holder.message.setText(messageCipherd);
-                }
-
-                else if(EncryptionChoice.equals("none")){
-                    holder.message.setText(messageObjectList.get(position).getMessage());
-                }
-
-            }
-        });
-
-        holder.Message.setOnClickListener(new View.OnClickListener() {//problem with the listener, the method for deciphering is only called after the 3rd trial, for the same word
-            //for some reason this on click listener is taking the event of the send button being clicked, not the message being clicked.
-            @Override
-            public void onClick(View v) {
-                Message = holder.message.getText().toString();
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID);
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        EncryptionChoice = snapshot.child("Encryption Type").getValue().toString();
-                        if(EncryptionChoice.equals("Simple Encryption"))
-                            key = snapshot.child("key").getValue().toString();
-
-                        else
+                        else if(EncryptionChoice.equals("Shifted Encryption") || EncryptionChoice.equals("Ceaser Encryption"))
                             ShiftValue = Integer.parseInt(snapshot.child("shift").getValue().toString());
                     }
 
@@ -321,13 +256,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView message, sender, Message, Sender;
+        TextView message, sender;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.message);
             sender = itemView.findViewById(R.id.sender);
-            Message = itemView.findViewById(R.id.Message);
-            Sender = itemView.findViewById(R.id.Sender);
         }
     }
 }
