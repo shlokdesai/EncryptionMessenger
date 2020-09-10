@@ -8,11 +8,10 @@
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20pt">
+    android:padding="10pt">
 
     <TextView
-
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,12 +19,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="10sp"
         android:id="@+id/lastMessage"
         android:layout_alignLeft="@+id/chat"
         android:layout_below="@+id/chat"
         android:text="No Messages"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/lastMessage"
+        android:layout_marginRight="-5dp"
+        android:layout_marginLeft="-5dp"
+        />
 </RelativeLayout>
 
 

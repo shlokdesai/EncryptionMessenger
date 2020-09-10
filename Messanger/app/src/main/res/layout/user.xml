@@ -11,7 +11,7 @@ android:layout_height="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:text="Name"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:id="@+id/Name"
             android:clickable="true"/>
 
@@ -19,7 +19,7 @@ android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="email"
-            android:textSize="15dp"
+            android:textSize="10dp"
             android:id="@+id/Email"
             android:layout_marginTop="55dp"
             android:layout_alignLeft="@+id/Name"/>
@@ -30,9 +30,17 @@ android:layout_height="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/Name"
             android:layout_alignParentEnd="true"
-            android:scaleX="2"
-            android:scaleY="2"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
             android:padding="5dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@id/Name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     </RelativeLayout>
 
 

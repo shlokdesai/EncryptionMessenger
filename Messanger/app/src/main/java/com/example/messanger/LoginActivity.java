@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,17 +25,16 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private static String Tag = "EmailPassword";
-
-    Button Login, Logout;
-    EditText Email, Password;
+    Button Login;
+    TextInputEditText Password, Email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Login = findViewById(R.id.Loginbtn);
+        Login = findViewById(R.id.LoginButton);
         Email = findViewById(R.id.Email);
         Password = findViewById(R.id.Password);
-        Logout = findViewById(R.id.Logout);
+        //Logout = findViewById(R.id.Logout);
 
 
 
@@ -45,13 +47,12 @@ public class LoginActivity extends AppCompatActivity {
                 signIn(email, password);
             }
         });
-
-        Logout.setOnClickListener(new View.OnClickListener() {
+        /*Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
             }
-        });
+        });*/
     }
 
 

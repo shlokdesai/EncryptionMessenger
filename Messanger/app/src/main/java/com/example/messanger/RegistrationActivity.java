@@ -33,9 +33,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     private Button Create, go2Login;
-    private EditText Email, Name;
-    private EditText Password;
-
+    private EditText Email, Name, Password;
 
 
     @Override
@@ -46,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         Name = findViewById(R.id.Name);
         Create = findViewById(R.id.Create);
-        go2Login = findViewById(R.id.go2Login);
+        go2Login = findViewById(R.id.Login);
         Email = findViewById(R.id.Email);
         Password = findViewById(R.id.Password);
 
@@ -133,7 +131,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             });
 
-            startActivity(new Intent(RegistrationActivity.this, FindContacts.class));
+            startActivity(new Intent(RegistrationActivity.this, ChatListActivity.class));
         }
 
     }
