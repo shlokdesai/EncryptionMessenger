@@ -47,17 +47,17 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
         setContentView(R.layout.activity_message_main);
 
         //make toolbar and add a back button
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(ChatListAdapter.ChatName);
-        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        /*toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MessageActivity.this, ChatListActivity.class));
             }
-        });
+        });*/
 
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        /*toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
