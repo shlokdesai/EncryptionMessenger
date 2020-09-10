@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.renderscript.Sampler;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
@@ -76,15 +77,84 @@ public class ChatListActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     for (final DataSnapshot snapshot1: snapshot.getChildren()){
+                        final String key = snapshot1.getKey();
+                        final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
 
-                        final DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("chat").child(snapshot1.getKey());
                         databaseReference1.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 String name;
+                                String chat = snapshot.getKey();
                                 if(snapshot.child("Group Name").exists()){
                                     name = snapshot.child("Group Name").getValue().toString();
-                                    chatListObject = new ChatListObject(snapshot1.getKey(), name);
+                                    if(name.equals("NoName")){
+                                        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users");
+                                        databaseReference2.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for(DataSnapshot snapshot2: snapshot.getChildren()){
+                                                    final String Key = snapshot2.getKey();
+                                                    if(!(Key.equals(FirebaseAuth.getInstance().getUid()))){
+                                                        DatabaseReference databaseReference3 = FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(Key);
+                                                        databaseReference3.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                DatabaseReference databaseReference4 = FirebaseDatabase.getInstance().getReference().child("user").child(Key).child("Name");
+                                                                databaseReference4.addValueEventListener(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                        String name = snapshot.getValue(String.class);
+                                                                        chatListObject = new ChatListObject(snapshot1.getKey(), name);
+                                                                        boolean chatExists = false;
+                                                                        for(ChatListObject ChatIterator: chatList){
+                                                                            if(ChatIterator.getChatID().equals(chatListObject.getChatID())){
+                                                                                chatExists = true;
+                                                                            }
+                                                                        }
+                                                                        if(chatExists == false){
+                                                                            chatList.add(chatListObject);
+                                                                            adapter.notifyDataSetChanged();
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                    }
+                                                                });
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+                                    else if (!(name.equals("NoName"))){
+                                        chatListObject = new ChatListObject(snapshot1.getKey(), name);
+                                        boolean chatExists = false;
+                                        for(ChatListObject ChatIterator: chatList){
+                                            if(ChatIterator.getChatID().equals(chatListObject.getChatID())){
+                                                chatExists = true;
+                                            }
+                                        }
+                                        if(chatExists == false){
+                                            chatList.add(chatListObject);
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                    /*chatListObject = new ChatListObject(snapshot1.getKey(), name);
                                     boolean chatExists = false;
                                     for(ChatListObject ChatIterator: chatList){
                                         if(ChatIterator.getChatID().equals(chatListObject.getChatID())){
@@ -94,9 +164,9 @@ public class ChatListActivity extends AppCompatActivity {
                                     if(chatExists == false){
                                         chatList.add(chatListObject);
                                         adapter.notifyDataSetChanged();
-                                    }
+                                    }*/
                                 }
-                                else if(!snapshot.child("Group Name").exists()){
+                                /*else if(!snapshot.child("Group Name").exists()){
                                     DatabaseReference databaseReference2  = databaseReference1.child("users");
                                     databaseReference2.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -139,7 +209,7 @@ public class ChatListActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                }
+                                }*/
                             }
 
                             @Override

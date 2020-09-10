@@ -47,7 +47,7 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
         setContentView(R.layout.activity_message_main);
 
         //make toolbar and add a back button
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(ChatListAdapter.ChatName);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
                 CheckBox status = popup.findViewById(R.id.status);
                 popupWindow.showAtLocation(popup, Gravity.CENTER, 0,0);
             }
-        });
+        });*/
 
         chatListObjects = super.getChatList();
         chatIDs = new ArrayList<>();
@@ -192,20 +192,7 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
             else if(encryptionChoice.equals("none")){
                 theMessage = none();
             }
-            final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID);
-            databaseReference2.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Map<String, Object> addLastMessage = new HashMap<>();
-                    addLastMessage.put("Last Message", theMessage);
-                    databaseReference2.updateChildren(addLastMessage);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID).child("Last Message").setValue(theMessage);
             DatabaseReference newMessageDb = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID).child("Messages").push();
             Map newMessageMap = new HashMap<>();
             newMessageMap.put("text", theMessage);
@@ -235,17 +222,7 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
     }
 
     private void getInfo(@NonNull DataSnapshot snapshot) {
-        /*for(ChatListObject object: chatListObjects){
-            if(object.getChatID().equals(ChatID)){
-                encryptionChoice = object.getEncryptionChoice();
-                if(!encryptionChoice.equals("Simple Encryption")){
-                    shiftValue = Integer.toString(object.getShift());
-                }
-                else{
-                    key = object.getKey();
-                }
-            }
-        }*/
+
         if(snapshot.exists()){
             if(snapshot.child("Encryption Type").getValue() != null) {
                 encryptionChoice = snapshot.child("Encryption Type").getValue().toString();

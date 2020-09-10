@@ -147,11 +147,12 @@ public class MainPageActivity extends AppCompatActivity {
                         }
                     }
                     FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(FirebaseAuth.getInstance().getUid()).setValue(true);
-                    String name = "";
+                    /*String name = "";
                     if(snapshot.child("Name").exists()){
                         name = snapshot.child("Name").getValue().toString();
-                    }
-                    final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
+                    }*/
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("Group Name").setValue("NoName");
+                    /*final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(key);
                     final String finalName = name;
                     databaseReference2.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -165,7 +166,7 @@ public class MainPageActivity extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }
-                    });
+                    });*/
                 }
 
                 @Override
@@ -173,6 +174,7 @@ public class MainPageActivity extends AppCompatActivity {
 
                 }
             });
+
             startActivity(new Intent(MainPageActivity.this, ChatListActivity.class) ) ;
         }
         else if(usersChosen > 1){
