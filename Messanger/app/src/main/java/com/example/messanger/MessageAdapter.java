@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +27,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     List<MessageObject> messageObjectList;
     String EncryptionChoice = "", key = "", sentmessage = "", Message = "", lastMessage = "";
     int ShiftValue;
+    int MSG_LEFT = 0;
+    int MSG_RIGHT = 1;
     public MessageAdapter(List<MessageObject> messageObjectList) {// this is not getting called on pressing the send button
         this.messageObjectList = messageObjectList;
     }
@@ -32,10 +36,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @NonNull
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message, parent, false);
-        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        view.setLayoutParams(lp);
-        return new ViewHolder(view);
+        if(viewType == MSG_RIGHT){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_sender, parent, false);
+            RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            view.setLayoutParams(lp);
+            return new ViewHolder(view);
+        }
+        else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_recieved, parent, false);
+            RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            view.setLayoutParams(lp);
+            return new ViewHolder(view);
+        }
+
     }
 
     @Override
@@ -102,7 +115,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             }
         });
-
     }
 
     private String shiftedCipher(String Message) {
@@ -255,12 +267,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return messageObjectList.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView message, sender;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            message = itemView.findViewById(R.id.message);
-            sender = itemView.findViewById(R.id.sender);
+            message = itemView.findViewById(R.id.Message);
+            sender = itemView.findViewById(R.id.Sender);
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String senderID = messageObjectList.get(position).getSender();
+        int viewType;
+        if(senderID.equals(firebaseUser.getUid())){
+            viewType = MSG_RIGHT;
+        }
+        else{
+            viewType = MSG_LEFT;
+        }
+        return  viewType;
     }
 }
