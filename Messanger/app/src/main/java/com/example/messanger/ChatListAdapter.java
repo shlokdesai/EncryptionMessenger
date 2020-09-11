@@ -2,6 +2,7 @@ package com.example.messanger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.BundleCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +51,45 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         holder.chat.setText(chatList.get(position).getName());
         ChatName = chatList.get(position).getName();
         ChatID = chatList.get(position).getChatID();
+
+        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID).child("users");
+        databaseReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int users = 0;
+                ArrayList<String> UserID = new ArrayList<>();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    if(!dataSnapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        users += 1;
+                        UserID.add(dataSnapshot.getKey());
+                    }
+                }
+                if(users == 1){
+                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("user").child(UserID.get(0)).child("Status");
+                    databaseReference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.getValue().equals("Online")){
+                                holder.status.setText(snapshot.getValue().toString());
+                            }
+                            else if(snapshot.getValue().equals("Offline")){
+                                holder.status.setText(snapshot.getValue().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         holder.chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -122,13 +163,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
     }
 
     public class ChatListViewHolder extends RecyclerView.ViewHolder {
-        public TextView chat, lastMesssage;
+        public TextView chat, lastMesssage, status;
         public LinearLayout layout;
         public ChatListViewHolder(View view){
             super(view);
             chat = view.findViewById(R.id.chat);
             layout = view.findViewById(R.id.Layout);
             lastMesssage = view.findViewById(R.id.lastMessage);
+            status = view.findViewById(R.id.Status);
         }
 
     }

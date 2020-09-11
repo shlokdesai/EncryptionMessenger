@@ -117,6 +117,18 @@ public class MessageActivity extends EncryptionChoiceforChatActivity {
         });
 
     }
+    @Override
+    protected  void onResume() {
+        super.onResume();
+        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Online");
+    }
+
+    @Override
+    protected  void onPause(){
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Offline");
+    }
+
 
 
     private void getChatMessages() {

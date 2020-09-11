@@ -19,6 +19,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         Login = findViewById(R.id.LoginButton);
         Email = findViewById(R.id.Email);
         Password = findViewById(R.id.Password);
-        //Logout = findViewById(R.id.Logout);
 
 
 
@@ -47,12 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                 signIn(email, password);
             }
         });
-        /*Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-            }
-        });*/
     }
 
 
@@ -64,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d(Tag, "Sign in with Email: Success");
                     FirebaseUser firebaseUser = auth.getCurrentUser();
+                    FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Online");
                     startActivity(new Intent(LoginActivity.this, ChatListActivity.class));
                 }
                 else{
                     Log.w(Tag, "Sign in with Email: Fail", task.getException());
                     Toast.makeText(LoginActivity.this, "Sign in Failed", Toast.LENGTH_LONG).show();
-                    //UpdateUI(null);
                 }
 
             }

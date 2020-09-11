@@ -25,6 +25,14 @@
         android:layout_below="@+id/chat"
         android:text="No Messages"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/Status"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"

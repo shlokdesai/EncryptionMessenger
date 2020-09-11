@@ -50,6 +50,7 @@ public class ChatListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 OneSignal.setSubscription(false);
+                FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Offline");
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);// this is basically the start activity that i have used everywhere else in the app.
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -70,8 +71,21 @@ public class ChatListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected  void onResume() {
+        super.onResume();
+        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Online");
+    }
+
+    @Override
+    protected  void onPause(){
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).child("Status").setValue("Offline");
+    }
+
     private void getUserChatList(){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).child("chat");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -89,6 +103,7 @@ public class ChatListActivity extends AppCompatActivity {
                                     name = snapshot.child("Group Name").getValue().toString();
                                     if(name.equals("NoName")){
                                         DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users");
+
                                         databaseReference2.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,10 +111,12 @@ public class ChatListActivity extends AppCompatActivity {
                                                     final String Key = snapshot2.getKey();
                                                     if(!(Key.equals(FirebaseAuth.getInstance().getUid()))){
                                                         DatabaseReference databaseReference3 = FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(Key);
+
                                                         databaseReference3.addValueEventListener(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                                 DatabaseReference databaseReference4 = FirebaseDatabase.getInstance().getReference().child("user").child(Key).child("Name");
+
                                                                 databaseReference4.addValueEventListener(new ValueEventListener() {
                                                                     @Override
                                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -141,6 +158,7 @@ public class ChatListActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
+
                                     else if (!(name.equals("NoName"))){
                                         chatListObject = new ChatListObject(snapshot1.getKey(), name);
                                         boolean chatExists = false;
@@ -154,62 +172,8 @@ public class ChatListActivity extends AppCompatActivity {
                                             adapter.notifyDataSetChanged();
                                         }
                                     }
-                                    /*chatListObject = new ChatListObject(snapshot1.getKey(), name);
-                                    boolean chatExists = false;
-                                    for(ChatListObject ChatIterator: chatList){
-                                        if(ChatIterator.getChatID().equals(chatListObject.getChatID())){
-                                            chatExists = true;
-                                        }
-                                    }
-                                    if(chatExists == false){
-                                        chatList.add(chatListObject);
-                                        adapter.notifyDataSetChanged();
-                                    }*/
                                 }
-                                /*else if(!snapshot.child("Group Name").exists()){
-                                    DatabaseReference databaseReference2  = databaseReference1.child("users");
-                                    databaseReference2.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            for(DataSnapshot snapshot2: snapshot.getChildren()){
-                                                if(!snapshot2.getValue().toString().equals(FirebaseAuth.getInstance().getUid())){
-                                                    String Uid = snapshot2.getValue().toString();
-                                                    DatabaseReference databaseReference3 = FirebaseDatabase.getInstance().getReference().child("user").child(Uid);
-                                                    databaseReference3.addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                            String name;
-                                                            if(snapshot.child("Name").exists()){
-                                                                name = snapshot.child("Name").getValue().toString();
-                                                                chatListObject = new ChatListObject(snapshot1.getKey(), name);
-                                                                boolean chatExists = false;
-                                                                for(ChatListObject ChatIterator: chatList){
-                                                                    if(ChatIterator.getChatID().equals(chatListObject.getChatID())){
-                                                                        chatExists = true;
-                                                                    }
-                                                                }
-                                                                if(chatExists == false){
-                                                                    chatList.add(chatListObject);
-                                                                    adapter.notifyDataSetChanged();
-                                                                }
-                                                            }
-                                                        }
 
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                }*/
                             }
 
                             @Override
@@ -217,17 +181,6 @@ public class ChatListActivity extends AppCompatActivity {
 
                             }
                         });
-                        //chatListObject = new ChatListObject(snapshot1.getKey());
-                        /*boolean chatExists = false;
-                        for(ChatListObject ChatIterator: chatList){
-                            if(ChatIterator.getChatID().equals(chatListObject.getChatID())){
-                                chatExists = true;
-                            }
-                        }
-                        if(chatExists == false){
-                            chatList.add(chatListObject);
-                            adapter.notifyDataSetChanged();
-                        }*/
 
                     }
                 }
@@ -250,4 +203,5 @@ public class ChatListActivity extends AppCompatActivity {
     public void onBackPressed() {//so that we dont go back to the previous activity when back is clicked
 
     }
+
 }

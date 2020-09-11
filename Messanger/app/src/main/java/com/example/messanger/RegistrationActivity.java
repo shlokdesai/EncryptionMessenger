@@ -130,7 +130,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 }
             });
-
+            FirebaseUser firebaseUser1 = FirebaseAuth.getInstance().getCurrentUser();
+            String userKey = firebaseUser1.getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(userKey);
+            Map<String, Object> addStatus = new HashMap<>();
+            addStatus.put("Status", "Online");
+            databaseReference.updateChildren(addStatus);
             startActivity(new Intent(RegistrationActivity.this, ChatListActivity.class));
         }
 
