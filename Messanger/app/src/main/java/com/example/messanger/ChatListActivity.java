@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChatListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -31,6 +32,7 @@ public class ChatListActivity extends AppCompatActivity {
     private ArrayList<ChatListObject> chatList;
     private Button newChat, logout;
     ChatListObject chatListObject;
+    boolean logedout = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ChatListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 OneSignal.setSubscription(false);
                 FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Offline");
+                logedout = true;
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);// this is basically the start activity that i have used everywhere else in the app.
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -80,11 +83,12 @@ public class ChatListActivity extends AppCompatActivity {
     @Override
     protected  void onPause(){
         super.onPause();
-        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).child("Status").setValue("Offline");
+        if(!logedout)
+            FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Status").setValue("Offline");
     }
 
     private void getUserChatList(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).child("chat");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())).child("chat");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
