@@ -84,22 +84,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     if(user!=null){
-                        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
-                        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(!snapshot.exists()){
-                                    Map<String, Object> userMap = new HashMap<>();
-                                    userMap.put("email", user.getEmail());
-                                    mUserDB.updateChildren(userMap);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                        FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid()).child("email").setValue(email);
                     }
                     LoginSuccessful(name);
                 }
@@ -141,4 +126,3 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 }
-
