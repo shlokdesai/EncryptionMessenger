@@ -11,18 +11,23 @@ android:layout_height="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:text="Name"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:id="@+id/Name"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:fontFamily="@font/pixel_font"
+            android:textColor="#8F7E4F"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="email"
-            android:textSize="10dp"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:id="@+id/Email"
             android:layout_marginTop="55dp"
-            android:layout_alignLeft="@+id/Name"/>
+            android:layout_alignLeft="@+id/Name"
+            android:fontFamily="@font/tech_font"
+            android:textColor="#B76D68"/>
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -33,14 +38,13 @@ android:layout_height="match_parent"
             android:scaleX="1.25"
             android:scaleY="1.25"
             android:padding="5dp"/>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray"
+            android:background="#E2E8CE"
             android:layout_below="@id/Name"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp" />
     </RelativeLayout>
 
 

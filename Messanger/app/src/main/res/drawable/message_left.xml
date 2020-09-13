@@ -7,6 +7,6 @@
         android:topLeftRadius="0dp"
         />
 
-    <solid android:color="@android:color/tab_indicator_text"/>
+    <solid android:color="#BE7C4D"/>
 
 </shape>

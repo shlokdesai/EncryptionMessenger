@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/Layout">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10pt">
+
+    <TextView
+        android:textSize="17sp"
+        android:id="@+id/chat"
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/pixel_font"
+        android:layout_height="wrap_content"
+        android:text="chatName"
+        android:textColor="#8F7E4F"/>
+
+    <TextView
+        android:id="@+id/lastMessage"
+        android:layout_width="150dp"
+        android:layout_height="17dp"
+        android:layout_below="@+id/chat"
+        android:layout_alignLeft="@+id/chat"
+        android:fontFamily="@font/tech_font"
+        android:text="No Messages"
+        android:textColor="#B76D68"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="Status"
+        android:textStyle="bold"
+        android:textColor="#B098A4"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#E2E8CE"
+        android:layout_below="@+id/lastMessage"
+        android:layout_marginRight="-5dp"
+        android:layout_marginLeft="-5dp" />
+</RelativeLayout>
+
+</LinearLayout>

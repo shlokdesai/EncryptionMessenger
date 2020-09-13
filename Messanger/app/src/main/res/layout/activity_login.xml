@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".Authentication.LoginActivity"
+    android:background="@drawable/gradient_background">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -12,14 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
+        android:textColorHint="#E2E8CE"
         android:layout_margin="5dp"
         app:endIconMode="password_toggle"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="400dp">
+        app:endIconTint="#E2E8CE"
+        android:layout_centerInParent="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/Password"
             android:textSize="25dp"
+            android:backgroundTint="#B76D68"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
@@ -29,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textColorHint="#E2E8CE"
         app:endIconMode="clear_text"
         android:id="@+id/EmailLayout"
         android:layout_margin="5dp"
@@ -37,6 +41,7 @@
             android:id="@+id/Email"
             android:layout_width="match_parent"
             android:textSize="25dp"
+            android:backgroundTint="#B76D68"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,6 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
+        android:textColor="#E2E8CE"
+        android:fontFamily="@font/tech_font"
+        android:textSize="15dp"
+        android:background="@drawable/buttons"
         android:layout_margin="5dp"
         android:layout_below="@id/EmailLayout"
         android:layout_alignParentRight="true"
@@ -59,6 +68,7 @@
         android:layout_centerVertical="true"
         android:padding="50dp"
         android:textSize="25sp"
+        android:textColor="#E2E8CE"
         />
 
 

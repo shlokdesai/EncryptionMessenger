@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Chat.ChooseEncryption"
+    android:padding="5dp"
+    android:background="@drawable/gradient_background">
+    <TextView
+        android:id="@+id/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/simple"
+        android:textSize="20dp"
+        android:text="Choose your Encryption type"
+        android:textColor="#E2E8CE"/>
+
+    <Button
+        android:id="@+id/shifted"
+        android:layout_centerHorizontal="true"
+        android:layout_width="250dp"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttons"
+        android:text="Shifted Encryption"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/buttons"
+        android:text="Simple Encryption"
+        android:id="@+id/simple"
+        android:layout_above="@id/ceaser"/>
+    <Button
+        android:id="@+id/ceaser"
+        android:layout_width="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttons"
+        android:text="Ceaser Encryption"
+        android:layout_above="@id/shifted"/>
+    <Button
+        android:id="@+id/none"
+        android:layout_width="250dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttons"
+        android:layout_height="wrap_content"
+        android:text="none"
+        android:layout_below="@id/shifted"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/none"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/Text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/tech_font"
+            android:textStyle="bold"
+            android:textColor="#E2E8CE"
+            android:textSize="15dp"
+            android:text="Enter your shift value" />
+
+        <EditText
+            android:id="@+id/shift_value"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/Text2"
+            android:digits="1234567890"
+            android:backgroundTint="#B76D68"/>
+
+        <Button
+            android:id="@+id/enter_shiftValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go"
+            android:textSize="10dp"
+            android:background="@drawable/buttons"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/none"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter the keyword"
+            android:fontFamily="@font/tech_font"
+            android:textSize="15dp"
+            android:textColor="#E2E8CE"
+            android:textStyle="bold"
+            android:id="@+id/Text3"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Keyword"
+            android:textColorHint="#FFE2E8CE"
+            android:fontFamily="@font/ubuntu_light"
+            android:id="@+id/key"
+            android:backgroundTint="#B76D68"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go"
+            android:id="@+id/enterKey"
+            android:textSize="10dp"
+            android:background="@drawable/buttons"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

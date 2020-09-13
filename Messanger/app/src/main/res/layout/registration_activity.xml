@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Authentication.RegistrationActivity"
+    android:background="@drawable/gradient_background">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/PasswordLayout"
+        android:hint="Password"
+        app:endIconMode="password_toggle"
+        app:endIconTint="#E2E8CE"
+        android:layout_margin="5dp"
+        android:textColorHint="#E2E8CE"
+        android:layout_below="@+id/EmailLayout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Password"
+            android:shadowColor="#FFFFFF"
+            android:inputType="textPassword"
+            android:backgroundTint="#B76D68"
+            android:textColor="#8F7E4F"
+            android:textColorHighlight="#CBD2D0"
+            android:textColorLink="#B76D68"
+            android:textCursorDrawable="?android:attr/fastScrollThumbDrawable" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColorHint="#E2E8CE"
+        android:id="@+id/EmailLayout"
+        app:endIconMode="clear_text"
+        android:layout_margin="5dp"
+        android:layout_centerInParent="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColor="#8F7E4F"
+            android:shadowColor="#FFFFFF"
+            android:backgroundTint="#B76D68"
+            android:textColorHighlight="#CBD2D0"
+            android:textColorLink="#B76D68"
+            android:textCursorDrawable="?android:attr/fastScrollThumbDrawable" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:id="@+id/NameLayout"
+        app:endIconMode="clear_text"
+        android:layout_margin="5dp"
+        android:textColorHint="#E2E8CE"
+        android:layout_above="@id/EmailLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#B76D68"
+            android:inputType="text"
+            android:shadowColor="#FFFFFF"
+            android:textColor="#8F7E4F"
+            android:textColorHighlight="#CBD2D0"
+            android:textColorLink="#B76D68"
+            android:textCursorDrawable="?android:attr/fastScrollThumbDrawable" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Create"
+        android:text="Create"
+        android:fontFamily="@font/tech_font"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:background="@drawable/buttons"
+        android:layout_margin="5dp"
+        android:layout_below="@id/PasswordLayout"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Login"
+        android:text="Login"
+        android:fontFamily="@font/tech_font"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:background="@drawable/buttons"
+        android:layout_margin="5dp"
+        android:layout_below="@id/PasswordLayout"
+        android:layout_toLeftOf="@id/Create"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/NameLayout"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/pixel_font"
+        android:padding="30dp"
+        android:text="Register"
+        android:textColor="#E2E8CE"
+        android:textColorHighlight="#CBD2D0"
+        android:textColorHint="#8F7E4F"
+        android:textColorLink="#B76D68"
+        android:textSize="25sp"
+        android:id="@+id/text"/>
+
+    <View
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/lock"
+        android:layout_above="@+id/text"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
+
