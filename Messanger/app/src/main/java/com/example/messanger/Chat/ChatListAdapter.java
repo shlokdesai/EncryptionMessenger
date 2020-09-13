@@ -91,7 +91,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
 
             }
         });
-        holder.chat.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 final Intent intent = new Intent(v.getContext(), MessageActivity.class);

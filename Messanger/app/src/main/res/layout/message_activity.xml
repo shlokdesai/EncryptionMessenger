@@ -25,10 +25,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/message"
+            android:textColorHint="#E2E8CE"
             android:hint="Type your message"
             android:fontFamily="@font/tech_font"
             android:textStyle="bold"
-            android:textColor="#00B76D68"
+            android:backgroundTint="#B76D68"
+            android:textColor="#8F7E4F"
             android:shadowColor="#E2E8CE"/>
         <Button
             android:layout_width="30dp"

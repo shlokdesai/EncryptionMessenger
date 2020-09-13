@@ -73,6 +73,7 @@
             android:layout_width="66dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/Text2"
+            android:textColor="#E2E8CE"
             android:digits="1234567890"
             android:backgroundTint="#B76D68"/>
 
@@ -104,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Keyword"
+            android:textColor="#E2E8CE"
             android:textColorHint="#FFE2E8CE"
             android:fontFamily="@font/ubuntu_light"
             android:id="@+id/key"
