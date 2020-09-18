@@ -25,7 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 //here we acc manage the list, display it and bring everything together.
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder> {
+public class
+ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder> {
     int enterCount;
     ArrayList<ChatListObject> chatList;
     public String ChatID;
@@ -98,9 +99,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
                 final Intent intent1 = new Intent(v.getContext(), ChooseEncryption.class);
                 final Bundle bundle = new Bundle();
                 final Bundle bundle1 = new Bundle();
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID);
-                databaseReference.child("Enter Count").addListenerForSingleValueEvent(new ValueEventListener() {
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID).child("Enter Count");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
+
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             //enter count decides if the user will set the encryption type for the chat
@@ -114,9 +116,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
                         }
 
                         else if(!snapshot.exists()){
-                            Map<String, Object> addEnterCount = new HashMap<>();
-                            addEnterCount.put("Enter Count", "1");
-                            databaseReference.updateChildren(addEnterCount);
+                            databaseReference.setValue("1");
                             bundle1.putString("chatID", chatList.get(holder.getAdapterPosition()).getChatID());
                             intent1.putExtras(bundle1);
                             v.getContext().startActivity(intent1);

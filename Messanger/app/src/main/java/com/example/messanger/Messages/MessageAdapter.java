@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,21 +70,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         //holder.sender.setText(messageObjectList.get(position).getSender());
         sentmessage = messageObjectList.get(position).getMessage();
         final String ChatID = messageObjectList.get(position).getChatID();
-        holder.message.setOnClickListener(new View.OnClickListener() {//problem with the listener, the method for deciphering is only called after the 3rd trial, for the same word
+        holder.layout.setOnClickListener(new View.OnClickListener() {//problem with the listener, the method for deciphering is only called after the 3rd trial, for the same word
             //for some reason this on click listener is taking the event of the send button being clicked, not the message being clicked.
             @Override
             public void onClick(View v) {
                 Message = holder.message.getText().toString();
+
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat").child(ChatID);
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        EncryptionChoice = snapshot.child("Encryption Type").getValue().toString();
-                        if(EncryptionChoice.equals("Simple Encryption"))
-                            key = snapshot.child("key").getValue().toString();
+                        if(snapshot.child("Encryption Type").exists()) {
+                            EncryptionChoice = snapshot.child("Encryption Type").getValue().toString();
+                            if (EncryptionChoice.equals("Simple Encryption"))
+                                key = snapshot.child("key").getValue().toString();
 
-                        else if(EncryptionChoice.equals("Shifted Encryption") || EncryptionChoice.equals("Ceaser Encryption"))
-                            ShiftValue = Integer.parseInt(snapshot.child("shift").getValue().toString());
+                            else if (EncryptionChoice.equals("Shifted Encryption") || EncryptionChoice.equals("Ceaser Encryption"))
+                                if(snapshot.child("shift").exists())
+                                    ShiftValue = Integer.parseInt(snapshot.child("shift").getValue().toString());
+                        }
                     }
 
                     @Override
@@ -91,24 +96,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
                     }
                 });
-                if(EncryptionChoice.equals("Shifted Encryption")){
-                    String messageCipherd = shiftedCipher(Message);
-                    holder.message.setText(messageCipherd);
-                }
 
-                else if(EncryptionChoice.equals("Simple Encryption")){
-                    String messageCipherd = simpleCipher(Message);
-                    holder.message.setText(messageCipherd);
+                switch (EncryptionChoice) {
+                    case "Shifted Encryption": {
+                        String messageCipherd = shiftedCipher(Message);
+                        holder.message.setText(messageCipherd);
+                        break;
+                    }
+                    case "Simple Encryption": {
+                        String messageCipherd = simpleCipher(Message);
+                        holder.message.setText(messageCipherd);
 
-                }
-
-                else if(EncryptionChoice.equals("Ceaser Encryption")){
-                    String messageCipherd = ceaserCipher(Message);
-                    holder.message.setText(messageCipherd);
-                }
-
-                else if(EncryptionChoice.equals("none")){
-                    holder.message.setText(messageObjectList.get(position).getMessage());
+                        break;
+                    }
+                    case "Ceaser Encryption": {
+                        String messageCipherd = ceaserCipher(Message);
+                        holder.message.setText(messageCipherd);
+                        break;
+                    }
+                    case "none":
+                        holder.message.setText(messageObjectList.get(position).getMessage());
+                        break;
                 }
 
             }
@@ -268,10 +276,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView message, sender;
+        RelativeLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.Message);
             sender = itemView.findViewById(R.id.Sender);
+            layout = itemView.findViewById(R.id.Layout);
         }
     }
 
