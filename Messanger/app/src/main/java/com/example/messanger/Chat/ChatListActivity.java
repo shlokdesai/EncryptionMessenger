@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.onesignal.OneSignal;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -33,6 +34,7 @@ public class ChatListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ChatListObject> chatList;
     private Button newChat, logout;
+    public static ArrayList<String> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class ChatListActivity extends AppCompatActivity {
                 startActivity(new Intent(ChatListActivity.this, CreateChat.class));
             }
         });
-
+        users = new ArrayList<>();
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +134,7 @@ public class ChatListActivity extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 for (DataSnapshot snapshot2 : snapshot.getChildren()) {
                                                     final String Key = snapshot2.getKey();
+                                                    users.add(Key);
                                                     if (!(Key.equals(FirebaseAuth.getInstance().getUid()))) {
 
                                                         DatabaseReference databaseReference3 = FirebaseDatabase.getInstance().getReference().child("chat").child(key).child("users").child(Key);

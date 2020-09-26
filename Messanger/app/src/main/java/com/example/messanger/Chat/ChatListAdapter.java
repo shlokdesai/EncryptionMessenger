@@ -2,6 +2,7 @@ package com.example.messanger.Chat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,7 @@ ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>
                             //enter count decides if the user will set the encryption type for the chat
                             enterCount = Integer.parseInt(snapshot.getValue().toString());
                             enterCount += 1;
+                            databaseReference.setValue(Integer.toString(enterCount));
                             if(enterCount>1){
                                 bundle.putString("chatID", chatList.get(holder.getAdapterPosition()).getChatID());
                                 intent.putExtras(bundle);

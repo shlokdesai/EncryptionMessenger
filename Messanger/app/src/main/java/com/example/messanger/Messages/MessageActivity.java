@@ -256,7 +256,7 @@ public class MessageActivity extends ChooseEncryption {
                     int k = j + shift;
                     if (k < alphabet.length) {
                         phraseArray[i] = alphabet[k];
-                    } else if (k > alphabet.length) {
+                    } else if (k >= alphabet.length) {
                         phraseArray[i] = alphabet[k - alphabet.length];
                     }
                     break;

@@ -1,5 +1,8 @@
 package com.example.messanger.ChatCreation;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class UserObject {
 
     private String email;
@@ -7,6 +10,7 @@ public class UserObject {
     private int timesClicked;
     private boolean isSelected;
     private String Name;
+    private ArrayList<String> ChatUserIDs;
 
     public UserObject(String email, String key,String name){
         this.email = email;

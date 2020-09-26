@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.example.messanger.Chat.ChatListActivity;
 import com.example.messanger.R;
@@ -55,7 +56,27 @@ public class CreateChat extends AppCompatActivity {
         chatCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateChat();
+                int checked = 0;
+                String userID = "";
+                for(UserObject user: userObjects){
+
+                    if(user.getSelected()) {
+                        checked++;
+                        userID = user.getUid();
+                    }
+                }
+                if(checked == 1 ){
+                    boolean similar = false;
+                    for(String chatID: ChatListActivity.users){
+                        if(chatID.equals(userID)){
+                            Toast.makeText(CreateChat.this, "Cannot Create a Duplicate Chat", Toast.LENGTH_LONG).show();
+                            similar = true;
+                        }
+                    }
+                    if(!similar){
+                        CreateChat();
+                    }
+                }
             }
         });
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user");

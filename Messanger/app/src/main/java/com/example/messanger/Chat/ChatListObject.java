@@ -1,5 +1,6 @@
 package com.example.messanger.Chat;
 
+import java.util.ArrayList;
 import java.util.jar.Attributes;
 
 public class ChatListObject {
